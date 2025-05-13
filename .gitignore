@@ -1,0 +1,15 @@
+
+/build/
+
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+CTestTestfile.cmake
+
+/blip  
+
+
+*.swp
+*.bak
+*.tmp
