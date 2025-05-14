@@ -3,11 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Required to avoid "undefined reference to yywrap"
 int yywrap(void) {
     return 1;
 }
-
 %}
 
 %%
@@ -30,6 +28,12 @@ int yywrap(void) {
 ">"                 { printf("RELOP: >\n"); }
 "+"                 { printf("OPERATOR: +\n"); }
 "-"                 { printf("OPERATOR: -\n"); }
+
+";"                 { printf("EOF: ;\n"); }
+
+"//".*              { /* Ignore single-line comments */ }
+
+"/*"([^*]|\*+[^*/])*\*+"/"   { /* Ignore multi-line comments */ }
 
 [ \t\n\r]+          { /* Ignore whitespace */ }
 
