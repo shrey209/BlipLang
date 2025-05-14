@@ -1,10 +1,16 @@
 cmake_minimum_required(VERSION 3.10)
-project(blip)
+project(BlipLang)
 
-set(CMAKE_CXX_STANDARD 17)
+find_package(FLEX REQUIRED)
 
-include_directories(include)
+# Generate lexer
+FLEX_TARGET(MyLexer src/lexer.l ${CMAKE_CURRENT_BINARY_DIR}/lex.yy.c)
 
-file(GLOB SOURCES "src/*.cpp")
+# Add executable using the generated lexer and main.cpp
+add_executable(bliplang
+    ${FLEX_MyLexer_OUTPUTS}
+    src/main.cpp
+)
 
-add_executable(blip ${SOURCES})
+# Include headers if needed
+target_include_directories(bliplang PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)

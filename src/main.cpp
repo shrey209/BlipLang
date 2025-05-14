@@ -1,7 +1,18 @@
-#include<iostream>
+#include <cstdio>
+extern "C" {
+    int yylex();   
+    extern FILE* yyin; 
+}
 
-using namespace std;
+int main() {
+  yyin = fopen("../input.txt", "r");
 
-int main(){
-    cout<<"hello world";
+    if (!yyin) {
+        perror("Failed to open input.txt");
+        return 1;
+    }
+
+    yylex();
+    fclose(yyin);
+    return 0;
 }
