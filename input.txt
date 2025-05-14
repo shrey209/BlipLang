@@ -1,6 +1,5 @@
-if x1 > 10 //this is comment
+if x1 > 10 
     y = x1 + 5;
 else
     y = x1 - 3;
 
-/*this is multiline comment */

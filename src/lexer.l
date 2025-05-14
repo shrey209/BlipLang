@@ -1,42 +1,41 @@
-%{
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+%option noyywrap
 
-int yywrap(void) {
-    return 1;
-}
+%{
+#include <iostream>
+#include <cstring>
+#include "tokenization.h"
+
+int currLine = 1;
 %}
 
 %%
 
-[0-9]+              { printf("INTEGER: %s\n", yytext); }
+[0-9]+              { addToken(TokenType::INTEGER, yytext, currLine); }
 
 [a-zA-Z_][a-zA-Z0-9_]* {
     if (strcmp(yytext, "if") == 0) {
-        printf("KEYWORD: if\n");
+        addToken(TokenType::KEYWORD, "if", currLine);
     } else if (strcmp(yytext, "else") == 0) {
-        printf("KEYWORD: else\n");
+        addToken(TokenType::KEYWORD, "else", currLine);
     } else {
-        printf("VARIABLE: %s\n", yytext);
+        addToken(TokenType::VARIABLE, yytext, currLine);
     }
 }
 
-"<="                { printf("RELOP: <=\n"); }
-">="                { printf("RELOP: >=\n"); }
-"<"                 { printf("RELOP: <\n"); }
-">"                 { printf("RELOP: >\n"); }
-"+"                 { printf("OPERATOR: +\n"); }
-"-"                 { printf("OPERATOR: -\n"); }
-
-";"                 { printf("EOF: ;\n"); }
+"<="                { addToken(TokenType::RELOP, "<=", currLine); }
+">="                { addToken(TokenType::RELOP, ">=", currLine); }
+"<"                 { addToken(TokenType::RELOP, "<", currLine); }
+">"                 { addToken(TokenType::RELOP, ">", currLine); }
+"+"                 { addToken(TokenType::OPERATOR, "+", currLine); }
+"-"                 { addToken(TokenType::OPERATOR, "-", currLine); }
+";"                 { addToken(TokenType::END_OF_FILE, ";", currLine); }
 
 "//".*              { /* Ignore single-line comments */ }
-
 "/*"([^*]|\*+[^*/])*\*+"/"   { /* Ignore multi-line comments */ }
 
-[ \t\n\r]+          { /* Ignore whitespace */ }
+[ \t\r]+            { /* Ignore spaces and tabs */ }
+\n                  { currLine++; }
 
-.                   { printf("UNKNOWN: %s\n", yytext); }
+.                   { addToken(TokenType::UNKNOWN, yytext, currLine); }
 
 %%
