@@ -31,3 +31,7 @@ void printAllTokens() {
         std::cout << "Token(" << typeStr << ", " << token.value << ", line " << token.line << ")\n";
     }
 }
+
+const std::vector<Token>& getTokens() {
+    return tokens;
+}

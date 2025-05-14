@@ -1,5 +1,5 @@
-if x1 > 10 
-    y = x1 + 5;
-else
-    y = x1 - 3;
-
+let x = 10;
+let y = x + 5;
+if y > 10 {
+    print y;
+}
