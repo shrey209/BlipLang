@@ -26,6 +26,7 @@ void printAllTokens() {
             case TokenType::OPERATOR: typeStr = "OPERATOR"; break;
             case TokenType::END_OF_FILE: typeStr = "EOF"; break;
             case TokenType::UNKNOWN: typeStr = "UNKNOWN"; break;
+            case TokenType::ASSIGNMENT: typeStr="ASSIGNMENT";break;
         }
 
         std::cout << "Token(" << typeStr << ", " << token.value << ", line " << token.line << ")\n";

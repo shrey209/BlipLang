@@ -19,12 +19,14 @@ int currLine = 1;
         addToken(TokenType::KEYWORD, "else", currLine);
     }else if(strcmp(yytext, "let")==0){
         addToken(TokenType::KEYWORD, "let", currLine);
+    }else if(strcmp(yytext, "print")==0){
+        addToken(TokenType::KEYWORD, "print", currLine);
     } 
     else {
         addToken(TokenType::VARIABLE, yytext, currLine);
     }
 }
-
+"="     { addToken(TokenType::ASSIGNMENT, "=", currLine); }
 "<="                { addToken(TokenType::RELOP, "<=", currLine); }
 ">="                { addToken(TokenType::RELOP, ">=", currLine); }
 "<"                 { addToken(TokenType::RELOP, "<", currLine); }
@@ -36,7 +38,7 @@ int currLine = 1;
 "}"     { addToken(TokenType::CLOSE_BRACE, yytext, currLine); }
 "("     { addToken(TokenType::OPEN_PAREN, yytext, currLine); }
 ")"     { addToken(TokenType::CLOSE_PAREN, yytext, currLine); }
-"="     { addToken(TokenType::ASSIGNMENT, yytext, currLine); }
+
 
 "//".*              { /* Ignore single-line comments */ }
 "/*"([^*]|\*+[^*/])*\*+"/"   { /* Ignore multi-line comments */ }
