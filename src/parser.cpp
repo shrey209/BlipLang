@@ -209,7 +209,8 @@ void parseBlock() {
 }
 
 void parseExpression() {
-   
+   parseTerm();
+    
 }
 
 void parseExpressionPrime() {
