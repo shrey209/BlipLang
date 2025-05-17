@@ -209,22 +209,53 @@ void parseBlock() {
 }
 
 void parseExpression() {
-   parseTerm();
-    
+    parseTerm();
+    parseExpressionPrime();
 }
+
 
 void parseExpressionPrime() {
- 
+    Token current = getCurrentToken();
+
+    if (current.type == TokenType::OPERATOR && (current.value == "+" || current.value == "-")) {
+        advanceToken();  
+        parseTerm();
+        parseExpressionPrime();  
+    }
+
 }
 
+
 void parseTerm() {
-   
+    parseFactor();
+    parseTermPrime();
 }
 
 void parseTermPrime() {
-  
+    Token current = getCurrentToken();
+
+    if (current.type == TokenType::OPERATOR && (current.value == "*" || current.value == "/")) {
+        advanceToken();  
+        parseFactor();
+        parseTermPrime();  
+    }
+    
 }
 
 void parseFactor() {
-  
+    Token current = getCurrentToken();
+
+    if (current.type == TokenType::OPEN_PAREN) {
+        advanceToken();  
+        parseExpression();
+        if (!match(TokenType::CLOSE_PAREN)) {
+            std::cerr << "Expected ')' after expression\n";
+        }
+    } else if (current.type == TokenType::INTEGER) {
+        advanceToken();  
+    } else if (current.type == TokenType::VARIABLE) {
+        advanceToken();  
+    } else {
+        std::cerr << "Unexpected token in factor: " << current.value << "\n";
+    }
 }
